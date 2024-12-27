@@ -8,6 +8,9 @@ import com.karan.ems.repository.EmployeeRepository;
 import com.karan.ems.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -24,5 +27,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeByID(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException(("Employee not found" + employeeId)));
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employeeList=employeeRepository.findAll();
+        return employeeList.stream().map(EmployeeMapper::mapToEmployeeDto).collect(Collectors.toList());
     }
 }

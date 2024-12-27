@@ -1,13 +1,17 @@
 package com.karan.ems.controller;
 
 import com.karan.ems.dto.EmployeeDto;
+import com.karan.ems.entity.Employee;
 import com.karan.ems.repository.EmployeeRepository;
 import com.karan.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -27,6 +31,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeDto);
     }
 
-    
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+        List<EmployeeDto> employees = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    }
 
 }
